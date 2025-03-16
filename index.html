@@ -1,0 +1,40 @@
+<body>
+    <form id="ajax-form" action="https://1337-marktawa-strapimiddlewa-7iz53yo36n9.ws-eu118.gitpod.io/form-submission"
+        method="post">
+        <label for="email">Enter emails:</label>
+        <input type="email" id="email" name="email" required />
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById("ajax-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+            const email = document.getElementById('email').value;
+
+            fetch('/api/emails', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    data: { email: email },
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle successful submission
+                    console.log('Success');
+                    form.reset();
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
